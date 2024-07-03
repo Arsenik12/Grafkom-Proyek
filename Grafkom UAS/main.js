@@ -30,29 +30,29 @@ scene.fog = new THREE.FogExp2( 0x222244, 0.0025 );
 // controls.zoomSpeed = 1.0;
 
 // Light
-{
-// direction light
-var light = new THREE.DirectionalLight(0xFFFFFF,10);
-light.position.set(0,10,0);
-light.target.position.set(-5,0,0);
-light.castShadow = true;
-scene.add(light);
-scene.add(light.target);
-
-// Hemisphere light
-// light = new THREE.HemisphereLight(0xB1E1FF, 0xB97A20, 0.5);
-// scene.add(light);
-
-//point light
-// light = new THREE.PointLight(0xFFFF00,50);
+// {
+// // direction light
+// var light = new THREE.DirectionalLight(0xFFFFFF,10);
 // light.position.set(0,10,0);
+// light.target.position.set(-5,0,0);
+// light.castShadow = true;
 // scene.add(light);
+// scene.add(light.target);
 
-//spot light
-// light = new THREE.SpotLight(0xFF0000,50);
-// light.position.set(10,10,0);
-// scene.add(light);
-}
+// // Hemisphere light
+// // light = new THREE.HemisphereLight(0xB1E1FF, 0xB97A20, 0.5);
+// // scene.add(light);
+
+// //point light
+// // light = new THREE.PointLight(0xFFFF00,50);
+// // light.position.set(0,10,0);
+// // scene.add(light);
+
+// //spot light
+// // light = new THREE.SpotLight(0xFF0000,50);
+// // light.position.set(10,10,0);
+// // scene.add(light);
+// }
 
 //moon light
 // {
