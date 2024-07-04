@@ -1,4 +1,390 @@
- new MTLLoader()
+let fenceObjects = [];
+
+
+
+
+//Kendaraan
+{
+  //diam
+  {
+    new MTLLoader()//1
+      .setPath('resources/ModelGrafkom/kendaraan/')
+      .load('truck.mtl', function (materials) {
+
+        materials.preload();
+
+        new OBJLoader()
+          .setMaterials(materials)
+          .setPath('resources/ModelGrafkom/kendaraan/')
+          .load('truck.obj', function (object) {
+
+            //atur disini
+            object.position.x = -182;
+            object.position.y = 5;
+            object.position.z = 520;
+            object.scale.setScalar(5);
+
+            object.traverse(function (child) {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+              }
+            });
+
+            scene.add(object);
+
+          }, onProgress);
+
+      });
+
+    new MTLLoader()//2
+      .setPath('resources/ModelGrafkom/kendaraan/')
+      .load('car2.mtl', function (materials) {
+
+        materials.preload();
+
+        new OBJLoader()
+          .setMaterials(materials)
+          .setPath('resources/ModelGrafkom/kendaraan/')
+          .load('car2.obj', function (object) {
+
+            //atur disini
+            object.position.x = -345;
+            object.position.y = 5;
+            object.position.z = 545;
+            object.rotation.y = 1.6;
+            object.scale.setScalar(5);
+
+            object.traverse(function (child) {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+              }
+            });
+
+            scene.add(object);
+
+          }, onProgress);
+
+      });
+
+    new MTLLoader()//3
+      .setPath('resources/ModelGrafkom/kendaraan/')
+      .load('car1.mtl', function (materials) {
+
+        materials.preload();
+
+        new OBJLoader()
+          .setMaterials(materials)
+          .setPath('resources/ModelGrafkom/kendaraan/')
+          .load('car1.obj', function (object) {
+
+            //atur disini
+            object.position.x = -345;
+            object.position.y = 5;
+            object.position.z = 520;
+            object.rotation.y = 1.6;
+            object.scale.setScalar(5);
+
+            object.traverse(function (child) {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+              }
+            });
+
+            scene.add(object);
+
+          }, onProgress);
+
+      });
+
+    new MTLLoader()//4
+      .setPath('resources/ModelGrafkom/kendaraan/')
+      .load('car1.mtl', function (materials) {
+
+        materials.preload();
+
+        new OBJLoader()
+          .setMaterials(materials)
+          .setPath('resources/ModelGrafkom/kendaraan/')
+          .load('car1.obj', function (object) {
+
+            //atur disini
+            object.position.x = -320;
+            object.position.y = 5;
+            object.position.z = 490;
+            object.rotation.y = 2;
+            object.scale.setScalar(5);
+
+            object.traverse(function (child) {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+              }
+            });
+
+            scene.add(object);
+
+          }, onProgress);
+
+      });
+
+    new MTLLoader()//5
+      .setPath('resources/ModelGrafkom/kendaraan/')
+      .load('car2.mtl', function (materials) {
+
+        materials.preload();
+
+        new OBJLoader()
+          .setMaterials(materials)
+          .setPath('resources/ModelGrafkom/kendaraan/')
+          .load('car2.obj', function (object) {
+
+            //atur disini
+            object.position.x = -345;
+            object.position.y = 5;
+            object.position.z = 465;
+            object.rotation.y = -1.5;
+            object.scale.setScalar(5);
+
+            object.traverse(function (child) {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+              }
+            });
+
+            scene.add(object);
+
+          }, onProgress);
+
+      });
+
+    new MTLLoader()//6 ini dicuri 
+      .setPath('resources/ModelGrafkom/kendaraan/')
+      .load('car2.mtl', function (materials) {
+
+        materials.preload();
+
+        new OBJLoader()
+          .setMaterials(materials)
+          .setPath('resources/ModelGrafkom/kendaraan/')
+          .load('car2.obj', function (object) {
+
+            //atur disini
+            object.position.x = -340;
+            object.position.y = 5;
+            object.position.z = 330;
+            object.rotation.y = 1.6;
+            object.scale.setScalar(5);
+
+            object.traverse(function (child) {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+              }
+            });
+
+            scene.add(object);
+
+          }, onProgress);
+
+      });
+
+    new MTLLoader()//7
+      .setPath('resources/ModelGrafkom/kendaraan/')
+      .load('car2.mtl', function (materials) {
+
+        materials.preload();
+
+        new OBJLoader()
+          .setMaterials(materials)
+          .setPath('resources/ModelGrafkom/kendaraan/')
+          .load('car2.obj', function (object) {
+
+            //atur disini
+            object.position.x = -315;
+            object.position.y = 5;
+            object.position.z = 380;
+            object.rotation.y = -0.7;
+            object.scale.setScalar(5);
+
+            object.traverse(function (child) {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+              }
+            });
+
+            scene.add(object);
+
+          }, onProgress);
+
+      });
+
+    new MTLLoader()//8
+      .setPath('resources/ModelGrafkom/kendaraan/')
+      .load('car1.mtl', function (materials) {
+
+        materials.preload();
+
+        new OBJLoader()
+          .setMaterials(materials)
+          .setPath('resources/ModelGrafkom/kendaraan/')
+          .load('car1.obj', function (object) {
+
+            //atur disini
+            object.position.x = -430;
+            object.position.y = 5;
+            object.position.z = 390;
+            object.rotation.y = -2;
+            object.scale.setScalar(5);
+
+            object.traverse(function (child) {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+              }
+            });
+
+            scene.add(object);
+
+          }, onProgress);
+
+      });
+
+    new MTLLoader()//9
+      .setPath('resources/ModelGrafkom/kendaraan/')
+      .load('car2.mtl', function (materials) {
+
+        materials.preload();
+
+        new OBJLoader()
+          .setMaterials(materials)
+          .setPath('resources/ModelGrafkom/kendaraan/')
+          .load('car2.obj', function (object) {
+
+            //atur disini
+            object.position.x = -450;
+            object.position.y = 5;
+            object.position.z = 480;
+            object.rotation.y = 0;
+            object.scale.setScalar(5);
+
+            object.traverse(function (child) {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+              }
+            });
+
+            scene.add(object);
+
+          }, onProgress);
+
+      });
+
+    new MTLLoader()//10
+      .setPath('resources/ModelGrafkom/kendaraan/')
+      .load('truckangkut.mtl', function (materials) {
+
+        materials.preload();
+
+        new OBJLoader()
+          .setMaterials(materials)
+          .setPath('resources/ModelGrafkom/kendaraan/')
+          .load('truckangkut.obj', function (object) {
+
+            //atur disini
+            object.position.x = -50;
+            object.position.y = 34;
+            object.position.z = 250;
+            object.scale.setScalar(5);
+
+            object.traverse(function (child) {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+              }
+            });
+
+            scene.add(object);
+
+          }, onProgress);
+
+      });
+
+    new MTLLoader()//11
+      .setPath('resources/ModelGrafkom/kendaraan/')
+      .load('truckangkut.mtl', function (materials) {
+
+        materials.preload();
+
+        new OBJLoader()
+          .setMaterials(materials)
+          .setPath('resources/ModelGrafkom/kendaraan/')
+          .load('truckangkut.obj', function (object) {
+
+            //atur disini
+            object.position.x = -110;
+            object.position.y = 34;
+            object.position.z = -60;
+            object.rotation.y = 3.1;
+            object.scale.setScalar(5);
+
+            object.traverse(function (child) {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+              }
+            });
+
+            scene.add(object);
+
+          }, onProgress);
+
+      });
+
+    new MTLLoader()//12
+      .setPath('resources/ModelGrafkom/kendaraan/')
+      .load('truckangkutkosong.mtl', function (materials) {
+
+        materials.preload();
+
+        new OBJLoader()
+          .setMaterials(materials)
+          .setPath('resources/ModelGrafkom/kendaraan/')
+          .load('truckangkutkosong.obj', function (object) {
+
+            //atur disini
+            object.position.x = -160;
+            object.position.y = 5;
+            object.position.z = -20;
+
+            object.scale.setScalar(5);
+
+            object.traverse(function (child) {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+              }
+            });
+
+            scene.add(object);
+
+          }, onProgress);
+
+      });
+
+  }
+  //jalan
+
+  let car1;
+
+  // const destinasi = new THREE.Vector3(-8, 5, 100);
+
+  new MTLLoader()
     .setPath('resources/ModelGrafkom/kendaraan/')
     .load('car1.mtl', function (materials) {
 
@@ -121,3 +507,7 @@
     requestAnimationFrame(animate);
   }
   requestAnimationFrame(animate);
+
+}
+
+
