@@ -4,7 +4,6 @@ import { MTLLoader } from 'three/examples/jsm/Addons.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
 
-
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true; 
@@ -25,97 +24,290 @@ controls.update();
 // scene.fog = new THREE.Fog(0x222244, 50, 500);
 scene.fog = new THREE.FogExp2( 0x222244, 0.0025 );
 
-// controls.minDistance = 50;
-// controls.maxDistance = 2000;
-// controls.zoomSpeed = 1.0;
-
-// Light
+//surya
 // {
-// // direction light
-// var light = new THREE.DirectionalLight(0xFFFFFF,10);
-// light.position.set(0,10,0);
-// light.target.position.set(-5,0,0);
-// light.castShadow = true;
-// scene.add(light);
-// scene.add(light.target);
+//   let sunObject, moonObject;
+//   let sunLight, moonLight;
 
-// // Hemisphere light
-// // light = new THREE.HemisphereLight(0xB1E1FF, 0xB97A20, 0.5);
-// // scene.add(light);
+//   new MTLLoader()//1
+//   .setPath( 'resources/ModelGrafkom/surya/' )
+//   .load( 'Moon.mtl', function ( materials ) {
 
-// //point light
-// // light = new THREE.PointLight(0xFFFF00,50);
-// // light.position.set(0,10,0);
-// // scene.add(light);
+//     materials.preload();
 
-// //spot light
-// // light = new THREE.SpotLight(0xFF0000,50);
-// // light.position.set(10,10,0);
-// // scene.add(light);
+//     new OBJLoader()
+//       .setMaterials( materials )
+//       .setPath( 'resources/ModelGrafkom/surya/' )
+//       .load( 'Moon.obj', function ( object ) {
+
+//         //atur disini
+//         object.position.x = -182;
+//         object.position.y = 250;
+//         object.position.z = 300;
+//         object.scale.setScalar( 5 );
+
+//         object.traverse(function (child) {
+//           if (child.isMesh) {
+//             child.castShadow = true;
+//             child.receiveShadow = true;
+//           }
+//         });
+
+//         scene.add( object );
+//         sunObject = object;
+
+//         sunLight = new THREE.DirectionalLight(0x99aaff, 1);
+//         sunLight.position.copy(sunObject.position);
+//         sunLight.castShadow = true;
+
+//         let sunLightTarget = new THREE.Object3D();
+//         sunLightTarget.position.set(-182, -500, 300);
+//         scene.add(sunLightTarget);
+//         sunLight.target = sunLightTarget;
+
+//         scene.add(sunLight);
+
+//         const helpernih = new THREE.DirectionalLightHelper(sunLight);
+//         scene.add(helpernih);
+
+//         sunLight.shadow.mapSize.width = 1024; 
+//         sunLight.shadow.mapSize.height = 1024;
+//         sunLight.shadow.camera.near = 0.5;   
+//         sunLight.shadow.camera.far = 500;    
+//         sunLight.shadow.camera.left = -500;   
+//         sunLight.shadow.camera.right = 500;   
+//         sunLight.shadow.camera.top = 500;     
+//         sunLight.shadow.camera.bottom = -500; 
+
+//       }, onProgress );
+
+//   } );
+
+//   new MTLLoader()//2
+//   .setPath( 'resources/ModelGrafkom/surya/' )
+//   .load( 'sun.mtl', function ( materials ) {
+
+//     materials.preload();
+
+//     new OBJLoader()
+//       .setMaterials( materials )
+//       .setPath( 'resources/ModelGrafkom/surya/' )
+//       .load( 'sun.obj', function ( object ) {
+
+//         //atur disini
+//         object.position.x = -182;
+//         object.position.y = -250;
+//         object.position.z = 300;
+//         object.scale.setScalar( 5 );
+
+//         object.traverse(function (child) {
+//           if (child.isMesh) {
+//             child.castShadow = true;
+//             child.receiveShadow = true;
+//           }
+//         });
+
+//         scene.add( object );
+//         moonObject = object;
+
+//         moonLight = new THREE.DirectionalLight(0xffffff, 1);
+//         moonLight.position.copy(moonObject.position);
+//         moonLight.castShadow = true;
+
+//         let moonLightTarget = new THREE.Object3D();
+//         moonLightTarget.position.set(-182, -500, 300);
+//         scene.add(moonLightTarget);
+//         moonLight.target = moonLightTarget;
+
+//         scene.add(moonLight);
+
+//         const helpernihh = new THREE.DirectionalLightHelper(moonLight);
+//         scene.add(helpernihh);
+
+//         moonLight.shadow.mapSize.width = 1024;
+//         moonLight.shadow.mapSize.height = 1024;
+//         moonLight.shadow.camera.near = 0.5;
+//         moonLight.shadow.camera.far = 500;
+//         moonLight.shadow.camera.left = -500;
+//         moonLight.shadow.camera.right = 500;
+//         moonLight.shadow.camera.top = 500;
+//         moonLight.shadow.camera.bottom = -500;
+
+//       }, onProgress );
+
+//   } );
+
+//   let time_prev_sun_moon = 0;
+//   let speed = 0.00006; // Kecepatan rotasi
+//   function animateSunMoon(time) {
+//     const dt = (time - time_prev_sun_moon) * 0.1;
+//     if (sunObject) {
+//       sunObject.rotation.x += speed * dt;
+//       sunObject.rotation.y += speed * dt;
+//       sunObject.position.x = 800 * Math.cos(speed * time);
+//       sunObject.position.y = 400 * Math.sin(speed * time);
+//       sunLight.position.copy(sunObject.position);
+//     }
+//     if (moonObject) {
+//       moonObject.rotation.x += speed * dt;
+//       moonObject.rotation.y += speed * dt;
+//       moonObject.position.x = 800 * Math.cos(speed * time + Math.PI);
+//       moonObject.position.y = 400 * Math.sin(speed * time + Math.PI);
+//       moonLight.position.copy(moonObject.position);
+//     }
+//     time_prev_sun_moon = time;
+//     requestAnimationFrame(animateSunMoon);
+//     renderer.render(scene, camera);
+//   }
+
+//   requestAnimationFrame(animateSunMoon);
 // }
 
-//moon light
-// {
-// // Light
-// var ambientLight = new THREE.AmbientLight(0x404040, 0.5); //low-intensity light
-// scene.add(ambientLight);
+{
+  let sunObject, moonObject;
+  let sunLight, moonLight;
 
-// var moonLight = new THREE.DirectionalLight(0x8888FF, 20); // Soft blue light
-// moonLight.position.set(-500, 300, 200);
-// moonLight.castShadow = true;
-// scene.add(moonLight);
+  new MTLLoader()//1
+  .setPath('resources/ModelGrafkom/surya/')
+  .load('Moon.mtl', function (materials) {
 
-// // objek bulan
-// var moonGeometry = new THREE.SphereGeometry(50, 32, 32);
-// var moonMaterial = new THREE.MeshBasicMaterial({ color: 0x8888FF });
-// var moon = new THREE.Mesh(moonGeometry, moonMaterial);
-// moon.position.set(-500, 300, 200);
-// scene.add(moon);
+    materials.preload();
 
-// var pointLight = new THREE.PointLight(0x8888FF, 0.3);
-// pointLight.position.set(-250, 150, 100);
-// scene.add(pointLight);
-// }
+    new OBJLoader()
+      .setMaterials(materials)
+      .setPath('resources/ModelGrafkom/surya/')
+      .load('Moon.obj', function (object) {
+
+        //atur disini
+        object.position.x = -182;
+        object.position.y = 250;
+        object.position.z = 300;
+        object.scale.setScalar(5);
+
+        object.traverse(function (child) {
+          if (child.isMesh) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+            child.material = new THREE.MeshPhongMaterial({ color: 0xaaaaaa, shininess: 10 });
+          }
+        });
+
+        scene.add(object);
+        sunObject = object;
+
+        sunLight = new THREE.DirectionalLight(0x99aaff, 10);
+        sunLight.position.copy(sunObject.position);
+        sunLight.castShadow = true;
+
+        let sunLightTarget = new THREE.Object3D();
+        sunLightTarget.position.set(-182, -500, 300);
+        scene.add(sunLightTarget);
+        sunLight.target = sunLightTarget;
+
+        scene.add(sunLight);
+
+        // const helpernih = new THREE.DirectionalLightHelper(sunLight);
+        // scene.add(helpernih);
+
+        sunLight.shadow.mapSize.width = 1024;
+        sunLight.shadow.mapSize.height = 1024;
+        sunLight.shadow.camera.near = 0.5;
+        sunLight.shadow.camera.far = 500;
+        sunLight.shadow.camera.left = -500;
+        sunLight.shadow.camera.right = 500;
+        sunLight.shadow.camera.top = 500;
+        sunLight.shadow.camera.bottom = -500;
+
+      }, onProgress);
+
+  });
+
+  new MTLLoader()//2
+  .setPath('resources/ModelGrafkom/surya/')
+  .load('sun.mtl', function (materials) {
+
+    materials.preload();
+
+    new OBJLoader()
+      .setMaterials(materials)
+      .setPath('resources/ModelGrafkom/surya/')
+      .load('sun.obj', function (object) {
+
+        //atur disini
+        object.position.x = -182;
+        object.position.y = -250;
+        object.position.z = 300;
+        object.scale.setScalar(5);
+
+        object.traverse(function (child) {
+          if (child.isMesh) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+            child.material = new THREE.MeshPhongMaterial({ color: 0xaaaaaa, shininess: 10 });
+          }
+        });
+
+        scene.add(object);
+        moonObject = object;
+
+        moonLight = new THREE.DirectionalLight(0xffffff, 3);
+        moonLight.position.copy(moonObject.position);
+        moonLight.castShadow = true;
+
+        let moonLightTarget = new THREE.Object3D();
+        moonLightTarget.position.set(-182, -500, 300);
+        scene.add(moonLightTarget);
+        moonLight.target = moonLightTarget;
+
+        scene.add(moonLight);
+
+        // const helpernihh = new THREE.DirectionalLightHelper(moonLight);
+        // scene.add(helpernihh);
+
+        moonLight.shadow.mapSize.width = 1024;
+        moonLight.shadow.mapSize.height = 1024;
+        moonLight.shadow.camera.near = 0.5;
+        moonLight.shadow.camera.far = 500;
+        moonLight.shadow.camera.left = -500;
+        moonLight.shadow.camera.right = 500;
+        moonLight.shadow.camera.top = 500;
+        moonLight.shadow.camera.bottom = -500;
+
+      }, onProgress);
+
+  });
+
+  const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+  scene.add(ambientLight);
+
+  let time_prev_sun_moon = 0;
+  let speed = 0.00006;
+  function animateSunMoon(time) {
+    const dt = (time - time_prev_sun_moon) * 0.1;
+    if (sunObject) {
+      sunObject.rotation.x += speed * dt;
+      sunObject.rotation.y += speed * dt;
+      sunObject.position.x = 800 * Math.cos(speed * time);
+      sunObject.position.y = 400 * Math.sin(speed * time);
+      sunLight.position.copy(sunObject.position);
+    }
+    if (moonObject) {
+      moonObject.rotation.x += speed * dt;
+      moonObject.rotation.y += speed * dt;
+      moonObject.position.x = 800 * Math.cos(speed * time + Math.PI);
+      moonObject.position.y = 400 * Math.sin(speed * time + Math.PI);
+      moonLight.position.copy(moonObject.position);
+    }
+    time_prev_sun_moon = time;
+    requestAnimationFrame(animateSunMoon);
+    renderer.render(scene, camera);
+  }
+
+  requestAnimationFrame(animateSunMoon);
+}
 
 // geometry
 const objects = [];
-
-//CobaObjek
-// {
-
-
-// // //plane
-// // {
-// // var planeGeo = new THREE.PlaneGeometry(40,40);
-// // var planeMat = new THREE.MeshPhongMaterial({
-// //   color : 0x888888,
-// //   side : THREE.DoubleSide
-// // });
-// // var mesh = new THREE.Mesh(planeGeo,planeMat);
-// // mesh.rotation.x = Math.PI * -0.5;
-// // scene.add(mesh);
-// // }
-
-// // //cube
-// // {
-// // var cubeGeo = new THREE.BoxGeometry(4,4,4);
-// // var cubeMat = new THREE.MeshPhongMaterial({color: '#8AC'});
-// // var mesh = new THREE.Mesh(cubeGeo,cubeMat);
-// // mesh.position.set(5,3.5,0);
-// // scene.add(mesh);
-// // }
-
-
-// // //sphere
-// // {
-// // var sphereGeo = new THREE.SphereGeometry(3,32,16);
-// // var sphereMat = new THREE.MeshPhongMaterial({color: '#CA8'});
-// // var mesh = new THREE.Mesh(sphereGeo,sphereMat);
-// // mesh.position.set(-4,5,0);
-// // scene.add(mesh);
-// // }
-// }
-//=================================================================================================================
 
 //cek progress
 const onProgress = function ( xhr ) {
@@ -187,6 +379,41 @@ new MTLLoader()
     // } );
 }
 
+//air
+{
+  new MTLLoader()
+    .setPath( 'resources/ModelGrafkom/air/' )
+    .load( 'AirOKE.mtl', function ( materials ) {
+
+      materials.preload();
+
+      new OBJLoader()
+        .setMaterials( materials )
+        .setPath( 'resources/ModelGrafkom/air/' )
+        .load( 'AirOKE.obj', function ( object ) {
+
+          //atur disini
+          object.position.x = -200;
+          object.position.y = -30;
+          object.position.z = 250;
+          object.scale.setScalar( 15 );
+
+          object.traverse(function (child) {
+            if (child.isMesh) {
+              child.material.transparent = true;
+              child.material.opacity = 0.5
+              child.castShadow = true;
+              child.receiveShadow = true;
+            }
+          });
+
+          scene.add( object );
+
+        }, onProgress );
+
+    } );
+}
+
 //lampujalan
 {
   new MTLLoader() //1
@@ -229,8 +456,8 @@ new MTLLoader()
           scene.add(light.target);
           scene.add(light);
 
-          const spotLightHelper = new THREE.SpotLightHelper(light);
-          scene.add(spotLightHelper);
+          // const spotLightHelper = new THREE.SpotLightHelper(light);
+          // scene.add(spotLightHelper);
 
         }, onProgress );
 
@@ -276,8 +503,8 @@ new MTLLoader()
           scene.add(light.target);
           scene.add(light);
 
-          const spotLightHelper = new THREE.SpotLightHelper(light);
-          scene.add(spotLightHelper);
+          // const spotLightHelper = new THREE.SpotLightHelper(light);
+          // scene.add(spotLightHelper);
 
         }, onProgress );
 
@@ -323,8 +550,8 @@ new MTLLoader()
           scene.add(light.target);
           scene.add(light);
 
-          const spotLightHelper = new THREE.SpotLightHelper(light);
-          scene.add(spotLightHelper);
+          // const spotLightHelper = new THREE.SpotLightHelper(light);
+          // scene.add(spotLightHelper);
 
         }, onProgress );
 
@@ -370,8 +597,8 @@ new MTLLoader()
           scene.add(light.target);
           scene.add(light);
 
-          const spotLightHelper = new THREE.SpotLightHelper(light);
-          scene.add(spotLightHelper);
+          // const spotLightHelper = new THREE.SpotLightHelper(light);
+          // scene.add(spotLightHelper);
 
 
         }, onProgress );
@@ -418,8 +645,8 @@ new MTLLoader()
           scene.add(light.target);
           scene.add(light);
 
-          const spotLightHelper = new THREE.SpotLightHelper(light);
-          scene.add(spotLightHelper);
+          // const spotLightHelper = new THREE.SpotLightHelper(light);
+          // scene.add(spotLightHelper);
 
         }, onProgress );
 
@@ -465,8 +692,8 @@ new MTLLoader()
           scene.add(light.target);
           scene.add(light);
 
-          const spotLightHelper = new THREE.SpotLightHelper(light);
-          scene.add(spotLightHelper);
+          // const spotLightHelper = new THREE.SpotLightHelper(light);
+          // scene.add(spotLightHelper);
 
         }, onProgress );
 
@@ -512,8 +739,8 @@ new MTLLoader()
           scene.add(light.target);
           scene.add(light);
 
-          const spotLightHelper = new THREE.SpotLightHelper(light);
-          scene.add(spotLightHelper);
+          // const spotLightHelper = new THREE.SpotLightHelper(light);
+          // scene.add(spotLightHelper);
 
         }, onProgress );
 
@@ -559,8 +786,8 @@ new MTLLoader()
           scene.add(light.target);
           scene.add(light);
 
-          const spotLightHelper = new THREE.SpotLightHelper(light);
-          scene.add(spotLightHelper);
+          // const spotLightHelper = new THREE.SpotLightHelper(light);
+          // scene.add(spotLightHelper);
 
         }, onProgress );
 
@@ -606,8 +833,8 @@ new MTLLoader()
           scene.add(light.target);
           scene.add(light);
 
-          const spotLightHelper = new THREE.SpotLightHelper(light);
-          scene.add(spotLightHelper);
+          // const spotLightHelper = new THREE.SpotLightHelper(light);
+          // scene.add(spotLightHelper);
 
         }, onProgress );
 
@@ -646,8 +873,8 @@ new MTLLoader()
           scene.add(light.target);
           scene.add(light);
 
-          const spotLightHelper = new THREE.SpotLightHelper(light);
-          scene.add(spotLightHelper);
+          // const spotLightHelper = new THREE.SpotLightHelper(light);
+          // scene.add(spotLightHelper);
 
         }, onProgress );
 
@@ -1999,8 +2226,8 @@ function animateRotationAndPositionY(object, initialRotation, targetRotation, in
 
           scene.add(cahayanih);
 
-          const pointLightHelper = new THREE.PointLightHelper(cahayanih, 4);
-          scene.add(pointLightHelper);
+          // const pointLightHelper = new THREE.PointLightHelper(cahayanih, 4);
+          // scene.add(pointLightHelper);
   
         }, onProgress );
   
@@ -2038,8 +2265,8 @@ function animateRotationAndPositionY(object, initialRotation, targetRotation, in
 
           scene.add(cahayanih);
 
-          const pointLightHelper = new THREE.PointLightHelper(cahayanih, 4);
-          scene.add(pointLightHelper);
+          // const pointLightHelper = new THREE.PointLightHelper(cahayanih, 4);
+          // scene.add(pointLightHelper);
   
         }, onProgress );
   
@@ -2733,1068 +2960,311 @@ function animateRotationAndPosition(object, initialRotation, targetRotation, ini
 }
 
 //cctv
-{
-//kiri
-  {
-
-  let cctv;
-  new MTLLoader()//1
-  .setPath( 'resources/ModelGrafkom/cctv/' )
-  .load( 'cctv.mtl', function ( materials ) {
-
-    materials.preload();
-
-    new OBJLoader()
-      .setMaterials( materials )
-      .setPath( 'resources/ModelGrafkom/cctv/' )
-      .load( 'cctv.obj', function ( object ) {
-
-        //atur disini
-        object.position.x = -198.4;
-        object.position.y = 62;
-        object.position.z = 85;
-        
-        object.scale.setScalar( 0.6 );
-
-        object.traverse(function (child) {
-          if (child.isMesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-          }
-        });
-
-        cctv = object;
-
-        scene.add( object );
-
-      }, onProgress );
-
-  } );
-
-  let time_prev = 0;
-  function animate(time) {
-    const dt = (time - time_prev) * 0.001;
-
-    if (cctv) {
-      cctv.rotation.y += 0.5 * dt;
-    }
-
-    renderer.render(scene, camera);
-    time_prev = time;
-    requestAnimationFrame(animate);
-}
-requestAnimationFrame(animate);
-
-  new MTLLoader()
-  .setPath( 'resources/ModelGrafkom/cctv/' )
-  .load( 'batangcctv.mtl', function ( materials ) {
-
-    materials.preload();
-
-    new OBJLoader()
-      .setMaterials( materials )
-      .setPath( 'resources/ModelGrafkom/cctv/' )
-      .load( 'batangcctv.obj', function ( object ) {
-
-        //atur disini
-        object.position.x = -198.4;
-        object.position.y = 62;
-        object.position.z = 85;
-        
-        object.scale.setScalar( 0.6 );
-
-        object.traverse(function (child) {
-          if (child.isMesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-          }
-        });
-
-        scene.add( object );
-
-      }, onProgress );
-
-  } );
-
-  }
-
-  //kanan
-
-{
-  new MTLLoader()//1
-  .setPath( 'resources/ModelGrafkom/cctv/' )
-  .load( 'cctv.mtl', function ( materials ) {
-
-    materials.preload();
-
-    new OBJLoader()
-      .setMaterials( materials )
-      .setPath( 'resources/ModelGrafkom/cctv/' )
-      .load( 'cctv.obj', function ( object ) {
-
-        //atur disini
-        object.position.x = -198.4;
-        object.position.y = 62;
-        object.position.z = 0;
-        
-        object.scale.setScalar( 0.6 );
-
-        object.traverse(function (child) {
-          if (child.isMesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-          }
-        });
-
-        scene.add( object );
-
-      }, onProgress );
-
-  } );
-
-  new MTLLoader()
-  .setPath( 'resources/ModelGrafkom/cctv/' )
-  .load( 'batangcctv.mtl', function ( materials ) {
-
-    materials.preload();
-
-    new OBJLoader()
-      .setMaterials( materials )
-      .setPath( 'resources/ModelGrafkom/cctv/' )
-      .load( 'batangcctv.obj', function ( object ) {
-
-        //atur disini
-        object.position.x = -198.4;
-        object.position.y = 62;
-        object.position.z = 0;
-        
-        object.scale.setScalar( 0.6 );
-
-        object.traverse(function (child) {
-          if (child.isMesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-          }
-        });
-
-        scene.add( object );
-
-      }, onProgress );
-
-  } );
-}
-
-
-}
-
-//surya
-{
-
-  let sunObject, moonObject;
-  let sunLight, moonLight;
-
-  new MTLLoader()//1
-  .setPath( 'resources/ModelGrafkom/surya/' )
-  .load( 'sun.mtl', function ( materials ) {
-
-    materials.preload();
-
-    new OBJLoader()
-      .setMaterials( materials )
-      .setPath( 'resources/ModelGrafkom/surya/' )
-      .load( 'sun.obj', function ( object ) {
-
-        //atur disini
-        object.position.x = -182;
-        object.position.y = 250;
-        object.position.z = 300;
-        object.scale.setScalar( 5 );
-
-        object.traverse(function (child) {
-          if (child.isMesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-          }
-        });
-
-        scene.add( object );
-        sunObject = object;
-
-        sunLight = new THREE.DirectionalLight(0xffffff, 10);
-        sunLight.position.copy(sunObject.position);
-        sunLight.castShadow = true;
-        scene.add(sunLight);
-
-        // sunLight.target.position.set(-500,100,300);
-        // scene.add(sunLight.target);
-
-        const helpernih = new THREE.DirectionalLightHelper(sunLight);
-        scene.add(helpernih);
-
-      }, onProgress );
-
-  } );
-
-  new MTLLoader()//2
-  .setPath( 'resources/ModelGrafkom/surya/' )
-  .load( 'Moon.mtl', function ( materials ) {
-
-    materials.preload();
-
-    new OBJLoader()
-      .setMaterials( materials )
-      .setPath( 'resources/ModelGrafkom/surya/' )
-      .load( 'Moon.obj', function ( object ) {
-
-        //atur disini
-        object.position.x = -182;
-        object.position.y = -250;
-        object.position.z = 300;
-        object.scale.setScalar( 5 );
-
-        object.traverse(function (child) {
-          if (child.isMesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-          }
-        });
-
-        scene.add( object );
-        moonObject = object;
-
-        moonLight = new THREE.PointLight(0x9999ff, 0.5, 1000);
-        moonLight.position.copy(moonObject.position);
-        moonLight.castShadow = true;
-        scene.add(moonLight);
-
-        const helpernihh = new THREE.PointLightHelper(moonLight);
-        scene.add(helpernihh);
-
-      }, onProgress );
-
-  } );
-
-  let time_prev_sun_moon = 0;
-  let speed = 0.0001; // Kecepatan rotasi
-  function animateSunMoon(time) {
-    const dt = (time - time_prev_sun_moon) * 0.1;
-    if (sunObject) {
-      sunObject.rotation.x += speed * dt;
-      sunObject.rotation.y += speed * dt;
-      sunObject.position.x = 800 * Math.cos(speed * time);
-      sunObject.position.y = 400 * Math.sin(speed * time);
-      sunLight.position.copy(sunObject.position);
-    }
-    if (moonObject) {
-      moonObject.rotation.x += speed * dt;
-      moonObject.rotation.y += speed * dt;
-      moonObject.position.x = 800 * Math.cos(speed * time + Math.PI);
-      moonObject.position.y = 400 * Math.sin(speed * time + Math.PI);
-      moonLight.position.copy(moonObject.position);
-    }
-    time_prev_sun_moon = time;
-    requestAnimationFrame(animateSunMoon);
-    renderer.render(scene, camera);
-  }
-
-  requestAnimationFrame(animateSunMoon);
-
-
-
-}
-
-//char
 // {
-  
-//   const clock = new THREE.Clock();
-//   let mixer;
-//   let orang;
+// //kiri
+//   {
 
-//   const loader = new FBXLoader();
-//   loader.load( 'resources/ModelGrafkom/Walking.fbx', function ( object ) {
+//   let cctv;
+//   new MTLLoader()//1
+//   .setPath( 'resources/ModelGrafkom/cctv/' )
+//   .load( 'cctv.mtl', function ( materials ) {
 
-//     mixer = new THREE.AnimationMixer( object );
+//     materials.preload();
 
-//     const action = mixer.clipAction( object.animations[ 0 ] );
-//     action.play();
+//     new OBJLoader()
+//       .setMaterials( materials )
+//       .setPath( 'resources/ModelGrafkom/cctv/' )
+//       .load( 'cctv.obj', function ( object ) {
 
-//     object.traverse(function (child) {
-//       if (child.isMesh) {
-//         child.material = new THREE.MeshStandardMaterial({
-//           color: child.material.color,
-//           map: child.material.map,
-//           normalMap: child.material.normalMap,
-//           roughness: 0.8,
-//           metalness: 0.2
+//         //atur disini
+//         object.position.x = -198.4;
+//         object.position.y = 62;
+//         object.position.z = 85;
+        
+//         object.scale.setScalar( 0.6 );
+
+//         object.traverse(function (child) {
+//           if (child.isMesh) {
+//             child.castShadow = true;
+//             child.receiveShadow = true;
+//           }
 //         });
-//         child.castShadow = true;
-//         child.receiveShadow = true;
-//       }
-//     });
 
-//     scene.add( object );
+//         cctv = object;
 
-//     object.position.x = -8;
-//     object.position.y = 5;
-//     object.position.z = -70;
-//     object.scale.setScalar(0.1);
+//         scene.add( object );
 
-//     orang = object;
+//       }, onProgress );
 
 //   } );
 
-//   // Animation function
 //   let time_prev = 0;
 //   function animate(time) {
-//     const dt = (time - time_prev) * 0.1;
+//     const dt = (time - time_prev) * 0.001;
 
-//     const delta = clock.getDelta();
-
-//     if ( mixer ) mixer.update( delta );
-
-//     if (orang) {
-//       orang.position.z += 0.1 * dt;
+//     if (cctv) {
+//       cctv.rotation.y += 0.5 * dt;
 //     }
 
 //     renderer.render(scene, camera);
 //     time_prev = time;
 //     requestAnimationFrame(animate);
-//   }
-//   requestAnimationFrame(animate);
-
 // }
- 
-//karakter
-// {
-// const clock = new THREE.Clock();
-// let mixer;
-// let orang;
-// let currentAction, actions = [];
-// let progress = 0;
-// const speed = 0.1;
-// let currentAnimationIndex = 0;
-// let animationComplete = false;
+// requestAnimationFrame(animate);
 
-// const paths = [
-//   {
-//     points: [
-//       new THREE.Vector3(0, 5, 0),
-//       new THREE.Vector3(0, 5, 50),
-//       new THREE.Vector3(-50, 5, 50),
-//       new THREE.Vector3(-50, 5, -10),
-//       new THREE.Vector3(-80, 10, -10),
-//       new THREE.Vector3(-90, 10, -10),
-//       new THREE.Vector3(-92, 5, -10),
-//       new THREE.Vector3(-93, 5, -10),
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Walking.fbx'
-//   },
+//   new MTLLoader()
+//   .setPath( 'resources/ModelGrafkom/cctv/' )
+//   .load( 'batangcctv.mtl', function ( materials ) {
 
-//   {
-//     points: [
-//       new THREE.Vector3(-93, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-      
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Leaning.fbx'
-//   },
+//     materials.preload();
 
-//   {
-//     points: [
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Crouched Sneaking Right.fbx'
-//   },
+//     new OBJLoader()
+//       .setMaterials( materials )
+//       .setPath( 'resources/ModelGrafkom/cctv/' )
+//       .load( 'batangcctv.obj', function ( object ) {
 
-//   {
-//     points: [
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Old Man Idle.fbx'
-//   },
-  
-//   {
-//     points: [
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 52),
-//       new THREE.Vector3(-300, 5, 52),
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Crouched Sneaking Right.fbx'
-//   },
-
-//   {
-//     points: [
-//       new THREE.Vector3(-300, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-
-
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Old Man Idle.fbx'
-//   },
-
-//   {
-//     points: [
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-40, 5, 52),
-//       new THREE.Vector3(-40, 5, 320),
-//       new THREE.Vector3(-340, 5, 320),
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Running.fbx'
-//   },
-
-// ];
-
-// let currentPath = paths[currentAnimationIndex];
-// let curve = new THREE.CatmullRomCurve3(currentPath.points);
-
-// const loader = new FBXLoader();
-// loader.load(currentPath.animationPath, function (object) {
-//   mixer = new THREE.AnimationMixer(object);
-
-//   const action = mixer.clipAction(object.animations[0]);
-//   actions.push(action);
-//   currentAction = actions[0];
-//   currentAction.play();
-
-//   object.traverse(function (child) {
-//     if (child.isMesh) {
-//       child.material = new THREE.MeshStandardMaterial({
-//         color: child.material.color,
-//         map: child.material.map,
-//         normalMap: child.material.normalMap,
-//         roughness: 0.8,
-//         metalness: 0.2
-//       });
-//       child.castShadow = true;
-//       child.receiveShadow = true;
-//     }
-//   });
-
-//   scene.add(object);
-
-//   object.position.set(0, 0, 0);
-//   object.scale.setScalar(0.1);
-
-//   orang = object;
-// });
-
-
-// let time_prev = 0;
-
-// function loadNextAnimation() {
-//   currentAnimationIndex++;
-//   if (currentAnimationIndex >= paths.length) {
-
-//     return;
-//   }
-//   currentPath = paths[currentAnimationIndex];
-//   curve = new THREE.CatmullRomCurve3(currentPath.points);
-
-//   loader.load(currentPath.animationPath, function (object) {
-//     mixer.stopAllAction(); 
+//         //atur disini
+//         object.position.x = -198.4;
+//         object.position.y = 62;
+//         object.position.z = 85;
         
-//     mixer = new THREE.AnimationMixer(object);
+//         object.scale.setScalar( 0.6 );
 
-
-//     const action = mixer.clipAction(object.animations[0]);
-//     actions.push(action);
-//     currentAction = action;
-//     currentAction.fadeIn(0.5).play();
-
-//     object.traverse(function (child) {
-//       if (child.isMesh) {
-
-//         child.material = new THREE.MeshStandardMaterial({
-//           color: child.material.color,
-//           map: child.material.map,
-//           normalMap: child.material.normalMap,
-//           roughness: 0.8,
-//           metalness: 0.2
+//         object.traverse(function (child) {
+//           if (child.isMesh) {
+//             child.castShadow = true;
+//             child.receiveShadow = true;
+//           }
 //         });
-//         child.castShadow = true;
-//         child.receiveShadow = true;
-//       }
-//     });
 
-//     scene.add(object);
+//         scene.add( object );
 
-//     object.position.set(0, 0, 0);
-//     object.scale.setScalar(0.1);
+//       }, onProgress );
 
-  
-//     if (orang) {
-//       scene.remove(orang);
-//     }
+//   } );
 
-//     orang = object;
-
- 
-//     progress = 0;
-//     animationComplete = false;
-//   });
-// }
-
-// function animate(time) {
-//   const dt = (time - time_prev) * 0.1;
-//   const delta = clock.getDelta();
-
-//   if (mixer) mixer.update(delta);
-
-//   if (orang && !animationComplete) {
-
-//     progress += speed * delta;
-//     if (progress > 1) {
-//       progress = 1; 
-//       animationComplete = true;
-//       currentAction.fadeOut(0.5);
-//       setTimeout(loadNextAnimation, 500);
-//     }
-
-//     const point = curve.getPointAt(progress);
-//     const tangent = curve.getTangentAt(progress);
-
-
-//     orang.position.copy(point);
-//     orang.lookAt(point.clone().add(tangent));
-
-//       if (currentAnimationIndex === 2) { 
-//         orang.rotation.set(0, Math.PI / 2, 0); 
-//     }
-//       if (currentAnimationIndex === 3) { 
-//         orang.rotation.set(0, -Math.PI / 2, 0); 
-//     }
-//     if (currentAnimationIndex === 4) { 
-//       orang.rotation.set(0, Math.PI / 2, 0); 
-//   }
 //   }
 
-//   renderer.render(scene, camera);
-//   time_prev = time;
-//   requestAnimationFrame(animate);
-// }
-// requestAnimationFrame(animate);
-// }
-
+//   //kanan
 
 // {
+//   new MTLLoader()//1
+//   .setPath( 'resources/ModelGrafkom/cctv/' )
+//   .load( 'cctv.mtl', function ( materials ) {
 
-// let clock = new THREE.Clock();
-// let mixer, orang, currentAction, actions = [];
-// let progress = 0;
-// const speed = 0.1;
-// let currentAnimationIndex = 0;
-// let animationComplete = false;
+//     materials.preload();
 
-// const paths = [
-//   {
-//     points: [
-//       new THREE.Vector3(0, 5, 0),
-//       new THREE.Vector3(0, 5, 50),
-//       new THREE.Vector3(-50, 5, 50),
-//       new THREE.Vector3(-50, 5, -10),
-//       new THREE.Vector3(-80, 10, -10),
-//       new THREE.Vector3(-90, 10, -10),
-//       new THREE.Vector3(-92, 5, -10),
-//       new THREE.Vector3(-93, 5, -10),
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Walking.fbx'
-//   },
+//     new OBJLoader()
+//       .setMaterials( materials )
+//       .setPath( 'resources/ModelGrafkom/cctv/' )
+//       .load( 'cctv.obj', function ( object ) {
 
-//   {
-//     points: [
-//       new THREE.Vector3(-93, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-      
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Leaning.fbx'
-//   },
+//         //atur disini
+//         object.position.x = -198.4;
+//         object.position.y = 62;
+//         object.position.z = 0;
+        
+//         object.scale.setScalar( 0.6 );
 
-//   {
-//     points: [
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Crouched Sneaking Right.fbx'
-//   },
-
-//   {
-//     points: [
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Old Man Idle.fbx'
-//   },
-  
-//   {
-//     points: [
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 52),
-//       new THREE.Vector3(-300, 5, 52),
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Crouched Sneaking Right.fbx'
-//   },
-
-//   {
-//     points: [
-//       new THREE.Vector3(-300, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-
-
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Old Man Idle.fbx'
-//   },
-
-//   {
-//     points: [
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-40, 5, 52),
-//       new THREE.Vector3(-40, 5, 320),
-//       new THREE.Vector3(-340, 5, 320),
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Running.fbx'
-//   },
-// ];
-
-// let currentPath = paths[currentAnimationIndex];
-// let curve = new THREE.CatmullRomCurve3(currentPath.points);
-
-// const loader = new FBXLoader();
-// loader.load(currentPath.animationPath, function (object) {
-//   mixer = new THREE.AnimationMixer(object);
-//   const action = mixer.clipAction(object.animations[0]);
-//   actions.push(action);
-//   currentAction = actions[0];
-//   currentAction.play();
-//   object.traverse(function (child) {
-//     if (child.isMesh) {
-//       child.material = new THREE.MeshStandardMaterial({
-//         color: child.material.color,
-//         map: child.material.map,
-//         normalMap: child.material.normalMap,
-//         roughness: 0.8,
-//         metalness: 0.2,
-//       });
-//       child.castShadow = true;
-//       child.receiveShadow = true;
-//     }
-//   });
-//   scene.add(object);
-//   object.position.set(0, 0, 0);
-//   object.scale.setScalar(0.1);
-//   orang = object;
-// });
-
-// let time_prev = 0;
-
-// function loadNextAnimation() {
-//   currentAnimationIndex++;
-//   if (currentAnimationIndex >= paths.length) return;
-//   currentPath = paths[currentAnimationIndex];
-//   curve = new THREE.CatmullRomCurve3(currentPath.points);
-//   loader.load(currentPath.animationPath, function (object) {
-//     mixer.stopAllAction();
-//     mixer = new THREE.AnimationMixer(object);
-//     const action = mixer.clipAction(object.animations[0]);
-//     actions.push(action);
-//     currentAction = action;
-//     currentAction.fadeIn(0.5).play();
-//     object.traverse(function (child) {
-//       if (child.isMesh) {
-//         child.material = new THREE.MeshStandardMaterial({
-//           color: child.material.color,
-//           map: child.material.map,
-//           normalMap: child.material.normalMap,
-//           roughness: 0.8,
-//           metalness: 0.2,
+//         object.traverse(function (child) {
+//           if (child.isMesh) {
+//             child.castShadow = true;
+//             child.receiveShadow = true;
+//           }
 //         });
-//         child.castShadow = true;
-//         child.receiveShadow = true;
-//       }
-//     });
-//     scene.add(object);
-//     object.position.set(0, 0, 0);
-//     object.scale.setScalar(0.1);
-//     if (orang) scene.remove(orang);
-//     orang = object;
-//     progress = 0;
-//     animationComplete = false;
-//   });
-// }
 
-// let cameraFirstPerson, cameraThirdPerson;
-// let isFirstPerson = false, isThirdPerson = false;
+//         scene.add( object );
 
-// function createCameras() {
-//   cameraFirstPerson = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
-//   cameraThirdPerson = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
-// }
+//       }, onProgress );
 
-// createCameras();
+//   } );
 
-// function animate(time) {
-//   const dt = (time - time_prev) * 0.1;
-//   const delta = clock.getDelta();
-//   if (mixer) mixer.update(delta);
+//   new MTLLoader()
+//   .setPath( 'resources/ModelGrafkom/cctv/' )
+//   .load( 'batangcctv.mtl', function ( materials ) {
 
-//   if (orang && !animationComplete) {
-//     progress += speed * delta;
-//     if (progress > 1) {
-//       progress = 1;
-//       animationComplete = true;
-//       currentAction.fadeOut(0.5);
-//       setTimeout(loadNextAnimation, 500);
-//     }
-//     const point = curve.getPointAt(progress);
-//     const tangent = curve.getTangentAt(progress);
-//     orang.position.copy(point);
-//     orang.lookAt(point.clone().add(tangent));
-//     if (currentAnimationIndex === 2) orang.rotation.set(0, Math.PI / 2, 0);
-//     if (currentAnimationIndex === 3) orang.rotation.set(0, -Math.PI / 2, 0);
-//     if (currentAnimationIndex === 4) orang.rotation.set(0, Math.PI / 2, 0);
-//     if (isFirstPerson) {
-//       cameraFirstPerson.position.copy(point.clone().add(new THREE.Vector3(0, 1.7, 0)));
-//       cameraFirstPerson.rotation.copy(orang.rotation);
-//       renderer.render(scene, cameraFirstPerson);
-//     } else if (isThirdPerson) {
-//       const offset = new THREE.Vector3(0, 10, -20).applyMatrix4(new THREE.Matrix4().makeRotationY(orang.rotation.y));
-//       cameraThirdPerson.position.copy(point.clone().add(offset));
-//       cameraThirdPerson.lookAt(point);
-//       renderer.render(scene, cameraThirdPerson);
-//     }
-//   } else {
-//     renderer.render(scene, camera);
-//   }
+//     materials.preload();
 
-//   time_prev = time;
-//   requestAnimationFrame(animate);
-// }
+//     new OBJLoader()
+//       .setMaterials( materials )
+//       .setPath( 'resources/ModelGrafkom/cctv/' )
+//       .load( 'batangcctv.obj', function ( object ) {
 
-// function toggleCamera(cameraType) {
-//   if (cameraType === 'first') {
-//     isFirstPerson = !isFirstPerson;
-//     isThirdPerson = false;
-//   } else if (cameraType === 'third') {
-//     isThirdPerson = !isThirdPerson;
-//     isFirstPerson = false;
-//   }
-// }
+//         //atur disini
+//         object.position.x = -198.4;
+//         object.position.y = 62;
+//         object.position.z = 0;
+        
+//         object.scale.setScalar( 0.6 );
 
-// document.addEventListener('keydown', function (event) {
-//   if (event.key === '1') {
-//     toggleCamera('first');
-//   } else if (event.key === '3') {
-//     toggleCamera('third');
-//   }
-// });
-
-// requestAnimationFrame(animate);
-// }
-
-//karakter + kamera
-// {
-//   let clock = new THREE.Clock();
-// let mixer, orang, currentAction, actions = [];
-// let progress = 0;
-// const speed = 0.1;
-// let currentAnimationIndex = 0;
-// let animationComplete = false;
-
-// const paths = [
-//   {
-//     points: [
-//       new THREE.Vector3(0, 5, 0),
-//       new THREE.Vector3(0, 5, 50),
-//       new THREE.Vector3(-50, 5, 50),
-//       new THREE.Vector3(-50, 5, -10),
-//       new THREE.Vector3(-80, 10, -10),
-//       new THREE.Vector3(-90, 10, -10),
-//       new THREE.Vector3(-92, 5, -10),
-//       new THREE.Vector3(-93, 5, -10),
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Walking.fbx'
-//   },
-
-//   {
-//     points: [
-//       new THREE.Vector3(-93, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, -10),
-      
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Leaning.fbx'
-//   },
-
-//   {
-//     points: [
-//       new THREE.Vector3(-92.5, 5, -10),
-//       new THREE.Vector3(-92.5, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Crouched Sneaking Right.fbx'
-//   },
-
-//   {
-//     points: [
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 82),
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Old Man Idle.fbx'
-//   },
-  
-//   {
-//     points: [
-//       new THREE.Vector3(-190, 5, 82),
-//       new THREE.Vector3(-190, 5, 52),
-//       new THREE.Vector3(-300, 5, 52),
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Crouched Sneaking Right.fbx'
-//   },
-
-//   {
-//     points: [
-//       new THREE.Vector3(-300, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-320, 5, 52),
-
-
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Old Man Idle.fbx'
-//   },
-
-//   {
-//     points: [
-//       new THREE.Vector3(-320, 5, 52),
-//       new THREE.Vector3(-40, 5, 52),
-//       new THREE.Vector3(-40, 5, 320),
-//       new THREE.Vector3(-340, 5, 320),
-//     ],
-//     animationPath: 'resources/ModelGrafkom/Running.fbx'
-//   },
-// ];
-
-// let currentPath = paths[currentAnimationIndex];
-// let curve = new THREE.CatmullRomCurve3(currentPath.points);
-
-// const loader = new FBXLoader();
-// loader.load(currentPath.animationPath, function (object) {
-//   mixer = new THREE.AnimationMixer(object);
-//   const action = mixer.clipAction(object.animations[0]);
-//   actions.push(action);
-//   currentAction = actions[0];
-//   currentAction.play();
-//   object.traverse(function (child) {
-//     if (child.isMesh) {
-//       child.material = new THREE.MeshStandardMaterial({
-//         color: child.material.color,
-//         map: child.material.map,
-//         normalMap: child.material.normalMap,
-//         roughness: 0.8,
-//         metalness: 0.2,
-//       });
-//       child.castShadow = true;
-//       child.receiveShadow = true;
-//     }
-//   });
-//   scene.add(object);
-//   object.position.set(0, 0, 0);
-//   object.scale.setScalar(0.1);
-//   orang = object;
-// });
-
-// let time_prev = 0;
-
-// function loadNextAnimation() {
-//   currentAnimationIndex++;
-//   if (currentAnimationIndex >= paths.length) return;
-//   currentPath = paths[currentAnimationIndex];
-//   curve = new THREE.CatmullRomCurve3(currentPath.points);
-//   loader.load(currentPath.animationPath, function (object) {
-//     mixer.stopAllAction();
-//     mixer = new THREE.AnimationMixer(object);
-//     const action = mixer.clipAction(object.animations[0]);
-//     actions.push(action);
-//     currentAction = action;
-//     currentAction.fadeIn(0.5).play();
-//     object.traverse(function (child) {
-//       if (child.isMesh) {
-//         child.material = new THREE.MeshStandardMaterial({
-//           color: child.material.color,
-//           map: child.material.map,
-//           normalMap: child.material.normalMap,
-//           roughness: 0.8,
-//           metalness: 0.2,
+//         object.traverse(function (child) {
+//           if (child.isMesh) {
+//             child.castShadow = true;
+//             child.receiveShadow = true;
+//           }
 //         });
-//         child.castShadow = true;
-//         child.receiveShadow = true;
-//       }
-//     });
-//     scene.add(object);
-//     object.position.set(0, 0, 0);
-//     object.scale.setScalar(0.1);
-//     if (orang) scene.remove(orang);
-//     orang = object;
-//     progress = 0;
-//     animationComplete = false;
-//   });
+
+//         scene.add( object );
+
+//       }, onProgress );
+
+//   } );
 // }
 
-// let cameraFirstPerson, cameraThirdPerson;
-// let isFirstPerson = false, isThirdPerson = false;
-// let cameraProgress = 0; // Progress along the curve for the camera
-// const cameraCurve = new THREE.CatmullRomCurve3([
-//   // Define camera path points here
-//   new THREE.Vector3(0, 10, -20),
-//   new THREE.Vector3(50, 20, -40),
-//   new THREE.Vector3(100, 30, -60),
-//   new THREE.Vector3(150, 40, -80),
-//   // Add more points as needed
-// ]);
 
-// function createCameras() {
-//   cameraFirstPerson = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
-//   cameraThirdPerson = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
 // }
 
-// createCameras();
+{
+  //kiri
+    {
+      new MTLLoader()//1
+      .setPath( 'resources/ModelGrafkom/cctv/' )
+      .load( 'cctv.mtl', function ( materials ) {
+    
+        materials.preload();
+    
+        new OBJLoader()
+          .setMaterials( materials )
+          .setPath( 'resources/ModelGrafkom/cctv/' )
+          .load( 'cctv.obj', function ( object ) {
+    
+            //atur disini
+            object.position.x = -198.4;
+            object.position.y = 62;
+            object.position.z = 85;
+            
+            object.scale.setScalar( 0.6 );
+    
+            object.traverse(function (child) {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+              }
+            });
+    
+            scene.add( object );
+    
+          }, onProgress );
+    
+      } );
+  
+    let time_prev = 0;
+    function animate(time) {
+      const dt = (time - time_prev) * 0.001;
+  
+      if (cctv) {
+        cctv.rotation.y += 0.5 * dt;
+      }
+  
+      renderer.render(scene, camera);
+      time_prev = time;
+      requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
+  
+    new MTLLoader()
+    .setPath( 'resources/ModelGrafkom/cctv/' )
+    .load( 'batangcctv.mtl', function ( materials ) {
+  
+      materials.preload();
+  
+      new OBJLoader()
+        .setMaterials( materials )
+        .setPath( 'resources/ModelGrafkom/cctv/' )
+        .load( 'batangcctv.obj', function ( object ) {
+  
+          //atur disini
+          object.position.x = -198.4;
+          object.position.y = 62;
+          object.position.z = 85;
+          
+          object.scale.setScalar( 0.6 );
+  
+          object.traverse(function (child) {
+            if (child.isMesh) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+            }
+          });
+  
+          scene.add( object );
+  
+        }, onProgress );
+  
+    } );
+  
+    }
+  
+    //kanan
+  
+  {
+    new MTLLoader()//1
+    .setPath( 'resources/ModelGrafkom/cctv/' )
+    .load( 'cctv.mtl', function ( materials ) {
+  
+      materials.preload();
+  
+      new OBJLoader()
+        .setMaterials( materials )
+        .setPath( 'resources/ModelGrafkom/cctv/' )
+        .load( 'cctv.obj', function ( object ) {
+  
+          //atur disini
+          object.position.x = -198.4;
+          object.position.y = 62;
+          object.position.z = 0;
+          
+          object.scale.setScalar( 0.6 );
+  
+          object.traverse(function (child) {
+            if (child.isMesh) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+            }
+          });
+  
+          scene.add( object );
+  
+        }, onProgress );
+  
+    } );
+  
+    new MTLLoader()
+    .setPath( 'resources/ModelGrafkom/cctv/' )
+    .load( 'batangcctv.mtl', function ( materials ) {
+  
+      materials.preload();
+  
+      new OBJLoader()
+        .setMaterials( materials )
+        .setPath( 'resources/ModelGrafkom/cctv/' )
+        .load( 'batangcctv.obj', function ( object ) {
+  
+          //atur disini
+          object.position.x = -198.4;
+          object.position.y = 62;
+          object.position.z = 0;
+          
+          object.scale.setScalar( 0.6 );
+  
+          object.traverse(function (child) {
+            if (child.isMesh) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+            }
+          });
+  
+          scene.add( object );
+  
+        }, onProgress );
+  
+    } );
+  }
+  
+  
+  }
 
-// function animate(time) {
-//   const dt = (time - time_prev) * 0.1;
-//   const delta = clock.getDelta();
-//   if (mixer) mixer.update(delta);
-
-//   if (orang && !animationComplete) {
-//     progress += speed * delta;
-//     if (progress > 1) {
-//       progress = 1;
-//       animationComplete = true;
-//       currentAction.fadeOut(0.5);
-//       setTimeout(loadNextAnimation, 500);
-//     }
-//     const point = curve.getPointAt(progress);
-//     const tangent = curve.getTangentAt(progress);
-//     orang.position.copy(point);
-//     orang.lookAt(point.clone().add(tangent));
-//     if (currentAnimationIndex === 2) orang.rotation.set(0, Math.PI / 2, 0);
-//     if (currentAnimationIndex === 3) orang.rotation.set(0, -Math.PI / 2, 0);
-//     if (currentAnimationIndex === 4) orang.rotation.set(0, Math.PI / 2, 0);
-
-//     if (isFirstPerson) {
-//       cameraFirstPerson.position.copy(point.clone().add(new THREE.Vector3(0, 1.7, 0)));
-//       cameraFirstPerson.rotation.copy(orang.rotation);
-//       renderer.render(scene, cameraFirstPerson);
-//     } else if (isThirdPerson) {
-//       cameraProgress += speed * delta;
-//       if (cameraProgress > 1) cameraProgress = 1; // Reset or loop camera progress as needed
-//       const cameraPoint = cameraCurve.getPointAt(cameraProgress);
-//       const cameraTangent = cameraCurve.getTangentAt(cameraProgress);
-//       const offset = new THREE.Vector3(0, 10, -20).applyMatrix4(new THREE.Matrix4().makeRotationY(orang.rotation.y));
-//       cameraThirdPerson.position.copy(cameraPoint.clone().add(offset));
-//       cameraThirdPerson.lookAt(cameraPoint.clone().add(cameraTangent));
-//       renderer.render(scene, cameraThirdPerson);
-//     }
-//   } else {
-//     renderer.render(scene, camera);
-//   }
-
-//   time_prev = time;
-//   requestAnimationFrame(animate);
-// }
-
-// function toggleCamera(cameraType) {
-//   if (cameraType === 'first') {
-//     isFirstPerson = !isFirstPerson;
-//     isThirdPerson = false;
-//   } else if (cameraType === 'third') {
-//     isThirdPerson = !isThirdPerson;
-//     isFirstPerson = false;
-//   }
-// }
-
-// document.addEventListener('keydown', function (event) {
-//   if (event.key === '1') {
-//     toggleCamera('first');
-//   } else if (event.key === '3') {
-//     toggleCamera('third');
-//   }
-// });
-
-// requestAnimationFrame(animate);
-// }
-
+//karakter
 {
 let clock = new THREE.Clock();
 let mixer, orang, currentAction, actions = [];
@@ -3829,7 +3299,6 @@ const paths = [
       new THREE.Vector3(-92.5, 5, -10),
       new THREE.Vector3(-92.5, 5, -10),
       new THREE.Vector3(-92.5, 5, -10),
-      
     ],
     animationPath: 'resources/ModelGrafkom/Leaning.fbx'
   },
@@ -3881,8 +3350,6 @@ const paths = [
       new THREE.Vector3(-320, 5, 52),
       new THREE.Vector3(-320, 5, 52),
       new THREE.Vector3(-320, 5, 52),
-
-
     ],
     animationPath: 'resources/ModelGrafkom/Old Man Idle.fbx'
   },
@@ -3964,32 +3431,100 @@ function loadNextAnimation() {
   });
 }
 
-let cameraFirstPerson, cameraThirdPerson;
-let isFirstPerson = false, isThirdPerson = false;
+let cameraFirstPerson, cameraThirdPerson, cameraCinematography;
+let isFirstPerson = false, isThirdPerson = false, isCinematography = false;
 let cameraProgress = 0;
+
 const cameraCurve = new THREE.CatmullRomCurve3([
-  // new THREE.Vector3(0, 10, -20),
-  // new THREE.Vector3(50, 20, -40),
-  // new THREE.Vector3(100, 30, -60),
-  // new THREE.Vector3(150, 40, -80),
 
-  new THREE.Vector3(0, 10, 0),
-  new THREE.Vector3(0, 10, 50),
-  new THREE.Vector3(-50, 10, 50),
-  new THREE.Vector3(-50, 10, -10),
-  new THREE.Vector3(-50, 10, -10),
-  new THREE.Vector3(-50, 10, -10),
-  new THREE.Vector3(-50, 10, -10),
-  new THREE.Vector3(-50, 10, -10),
+  new THREE.Vector3(0, 15, 0),
+  new THREE.Vector3(0, 15, 50),
+  new THREE.Vector3(-50, 15, 50),
+  new THREE.Vector3(-50, 15, -10),
+  new THREE.Vector3(-80, 20, -10),
+  new THREE.Vector3(-90, 20, -10),
+  new THREE.Vector3(-92, 15, -10),
+  new THREE.Vector3(-93, 15, -10),
 
+  new THREE.Vector3(-93, 15, -10),
+  new THREE.Vector3(-93, 15, -10),
+  new THREE.Vector3(-93, 15, -10),
+  new THREE.Vector3(-93, 15, -10),
+  new THREE.Vector3(-93, 15, -10),
+  new THREE.Vector3(-93, 15, -10),
+
+  new THREE.Vector3(-93, 15, -10),
+  new THREE.Vector3(-92.5, 15, -10),
+  new THREE.Vector3(-92.5, 15, -10),
+  new THREE.Vector3(-92.5, 15, -10),
+  new THREE.Vector3(-92.5, 15, -10),
+  new THREE.Vector3(-92.5, 15, -10),
+  new THREE.Vector3(-92.5, 15, -10),
+  new THREE.Vector3(-92.5, 15, -10),
+  new THREE.Vector3(-92.5, 15, -10),
+
+  new THREE.Vector3(-92.5, 15, -10),
+  new THREE.Vector3(-92.5, 15, 82),
+  new THREE.Vector3(-190, 15, 82),
+
+  new THREE.Vector3(-190, 15, 82),
+  new THREE.Vector3(-190, 15, 82),
+  new THREE.Vector3(-190, 15, 82),
+  new THREE.Vector3(-190, 15, 82),
+  new THREE.Vector3(-190, 15, 82),
+  new THREE.Vector3(-190, 15, 82),
+  new THREE.Vector3(-190, 15, 82),
+  new THREE.Vector3(-190, 15, 82),
+  new THREE.Vector3(-190, 15, 82),
+  new THREE.Vector3(-190, 15, 82),
+
+  new THREE.Vector3(-190, 15, 82),
+  new THREE.Vector3(-190, 15, 52),
+  new THREE.Vector3(-300, 15, 52),
+
+  new THREE.Vector3(-300, 15, 52),
+  new THREE.Vector3(-320, 15, 52),
+  new THREE.Vector3(-320, 15, 52),
+  new THREE.Vector3(-320, 15, 52),
+  new THREE.Vector3(-320, 15, 52),
+  new THREE.Vector3(-320, 15, 52),
+  new THREE.Vector3(-320, 15, 52),
+  new THREE.Vector3(-320, 15, 52),
+  new THREE.Vector3(-320, 15, 52),
+  new THREE.Vector3(-320, 15, 52),
+  new THREE.Vector3(-320, 15, 52),
+
+  new THREE.Vector3(-320, 15, 52),
+  new THREE.Vector3(-40, 15, 52),
+  new THREE.Vector3(-40, 15, 320),
+  new THREE.Vector3(-340, 15, 320),
 ]);
 
 function createCameras() {
   cameraFirstPerson = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
   cameraThirdPerson = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+  cameraCinematography = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+
+  const initialPoint = cameraCurve.getPointAt(cameraProgress);
+  const initialTangent = cameraCurve.getTangentAt(cameraProgress);
+  cameraCinematography.position.copy(initialPoint);
+  cameraCinematography.lookAt(initialPoint.clone().add(initialTangent));
 }
 
 createCameras();
+
+let controlsThirdPerson;
+
+function initOrbitControls() {
+  controlsThirdPerson = new OrbitControls(cameraThirdPerson, renderer.domElement);
+  controlsThirdPerson.target.set(0, 0, 0);
+  controlsThirdPerson.enableDamping = true;
+  controlsThirdPerson.dampingFactor = 0.05;
+  controlsThirdPerson.minDistance = 10;
+  controlsThirdPerson.maxDistance = 50;
+}
+
+initOrbitControls();
 
 function animate(time) {
   const dt = (time - time_prev) * 0.1;
@@ -4013,27 +3548,52 @@ function animate(time) {
     if (currentAnimationIndex === 4) orang.rotation.set(0, Math.PI / 2, 0);
 
     if (isFirstPerson) {
-      const offset = new THREE.Vector3(-3, 16, -3); // atur posisi
+      const offset = new THREE.Vector3(-3, 16, -3);
       const firstPersonPosition = point.clone().add(offset);
       cameraFirstPerson.position.copy(firstPersonPosition);
       cameraFirstPerson.rotation.copy(orang.rotation);
 
-      const additionalRotation = new THREE.Euler(0, Math.PI, 0); // derajat
+      const additionalRotation = new THREE.Euler(0, Math.PI, 0);
       cameraFirstPerson.rotation.x += additionalRotation.x;
       cameraFirstPerson.rotation.y += additionalRotation.y;
       cameraFirstPerson.rotation.z += additionalRotation.z;
 
+      if (currentAnimationIndex === 2) {
+        const additionalRotation = new THREE.Euler(0, Math.PI, 0);
+        cameraFirstPerson.rotation.x += additionalRotation.x;
+        cameraFirstPerson.rotation.y += additionalRotation.y;
+        cameraFirstPerson.rotation.z += additionalRotation.z;
+      }
+
+      if (currentAnimationIndex === 4) {
+        const additionalRotation = new THREE.Euler(0, Math.PI, 0);
+        cameraFirstPerson.rotation.x += additionalRotation.x;
+        cameraFirstPerson.rotation.y += additionalRotation.y;
+        cameraFirstPerson.rotation.z += additionalRotation.z;
+      }
+
       renderer.render(scene, cameraFirstPerson);
-    } else if (isThirdPerson) {
-      cameraProgress += speed * delta;
-      if (cameraProgress > 1) cameraProgress = 1; 
-      const cameraPoint = cameraCurve.getPointAt(cameraProgress);
-      const cameraTangent = cameraCurve.getTangentAt(cameraProgress);
-      const offset = new THREE.Vector3(0, 10, -20).applyMatrix4(new THREE.Matrix4().makeRotationY(orang.rotation.y));
-      cameraThirdPerson.position.copy(cameraPoint.clone().add(offset));
-      cameraThirdPerson.lookAt(cameraPoint.clone().add(cameraTangent));
+    } 
+    
+    else if (isThirdPerson) {
+      controlsThirdPerson.target.copy(point);
+      controlsThirdPerson.update();
       renderer.render(scene, cameraThirdPerson);
-    } else {
+    } 
+    
+    else if (isCinematography) {
+      cameraProgress += 0.01 * delta;
+      if (cameraProgress > 1) cameraProgress -= 1;
+      
+      const point = cameraCurve.getPointAt(cameraProgress);
+      const tangent = cameraCurve.getTangentAt(cameraProgress);
+      cameraCinematography.position.copy(point);
+      cameraCinematography.lookAt(point.clone().add(tangent));
+
+      renderer.render(scene, cameraCinematography);
+    } 
+    
+    else {
       renderer.render(scene, camera);
     }
   }
@@ -4046,9 +3606,15 @@ document.addEventListener('keydown', (event) => {
   if (event.key === '1') {
     isFirstPerson = !isFirstPerson;
     isThirdPerson = false;
+    isCinematography = false;
   } else if (event.key === '3') {
     isThirdPerson = !isThirdPerson;
     isFirstPerson = false;
+    isCinematography = false;
+  } else if (event.key === '4'){
+    isCinematography = !isCinematography;
+    isFirstPerson = false;
+    isThirdPerson = false;
   }
 });
 
@@ -4056,125 +3622,13 @@ requestAnimationFrame(animate);
 }
 
 
-//error
-// {
-// //code siang malam
-// {
-// // Sun Light 
-// const sunLight = new THREE.DirectionalLight(0xffffff, 1);
-// sunLight.position.set(100, 100, 100);
-// sunLight.castShadow = true;
-// sunLight.shadow.mapSize.width = 2048;
-// sunLight.shadow.mapSize.height = 2048;
-// sunLight.shadow.camera.near = 0.1;
-// sunLight.shadow.camera.far = 1000;
-// scene.add(sunLight);
 
-// // Moon Light 
-// const moonLight = new THREE.DirectionalLight(0x8888ff, 0.5);
-// moonLight.position.set(-100, -100, -100);
-// moonLight.castShadow = true;
-// moonLight.shadow.mapSize.width = 2048;
-// moonLight.shadow.mapSize.height = 2048;
-// moonLight.shadow.camera.near = 0.1;
-// moonLight.shadow.camera.far = 1000;
-// scene.add(moonLight);
 
-// const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
-// scene.add(ambientLight);
 
-// const skybox = new THREE.Mesh(
-//     new THREE.SphereGeometry(5000, 32, 32),
-//     new THREE.MeshBasicMaterial({ color: 0x87ceeb, side: THREE.BackSide })
-// );
-// scene.add(skybox);
 
-// const sunGeometry = new THREE.SphereGeometry(20, 32, 32);
-// const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-// const sun = new THREE.Mesh(sunGeometry, sunMaterial);
-// scene.add(sun);
 
-// const moonGeometry = new THREE.SphereGeometry(20, 32, 32);
-// const moonMaterial = new THREE.MeshBasicMaterial({ color: 0xaaaaaa });
-// const moon = new THREE.Mesh(moonGeometry, moonMaterial);
-// scene.add(moon);
-// }
+  
 
-// //animasi siang malam
-// {
-//   let time_prev = 0;
-//   let cycleDuration = 20000; 
-  
-//   function animate(time) {
-//       let dt = time - time_prev;
-//       dt *= 0.1;
-  
-//       objects.forEach((obj) => {
-//           obj.rotation.z += dt * 0.01;
-//       });
-  
-//       let cycleProgress = (time % cycleDuration) / cycleDuration;
-  
-//       let sunAngle = cycleProgress * Math.PI * 2; 
-//       sun.position.set(200 * Math.cos(sunAngle), 200 * Math.sin(sunAngle), 0);
-//       sunLight.position.copy(sun.position);
-  
-//       let moonAngle = sunAngle + Math.PI; 
-//       moon.position.set(200 * Math.cos(moonAngle), 200 * Math.sin(moonAngle), 0);
-//       moonLight.position.copy(moon.position);
-  
-//       if (cycleProgress < 0.25) {
-//           // Dawn
-//           let transitionProgress = cycleProgress / 0.25;
-//           skybox.material.color.setHSL(0.6, 0.8 * transitionProgress, 0.6 * transitionProgress + 0.2);
-//           sunLight.intensity = transitionProgress;
-//           moonLight.intensity = 1 - transitionProgress;
-//           ambientLight.intensity = 0.25 + 0.25 * transitionProgress;
-//       } else if (cycleProgress < 0.5) {
-//           // Day
-//           skybox.material.color.setHSL(0.6, 0.8, 0.8);
-//           sunLight.intensity = 1;
-//           moonLight.intensity = 0;
-//           ambientLight.intensity = 0.5;
-//       } else if (cycleProgress < 0.75) {
-//           // Dusk
-//           let transitionProgress = (cycleProgress - 0.5) / 0.25;
-//           skybox.material.color.setHSL(0.6, 0.8 * (1 - transitionProgress), 0.6 * (1 - transitionProgress) + 0.2);
-//           sunLight.intensity = 1 - transitionProgress;
-//           moonLight.intensity = transitionProgress;
-//           ambientLight.intensity = 0.5 - 0.25 * transitionProgress;
-//       } else {
-//           // Night
-//           let transitionProgress = (cycleProgress - 0.75) / 0.25;
-//           skybox.material.color.setHSL(0.6, 0.2 * (1 - transitionProgress), 0.2 * (1 - transitionProgress) + 0.2);
-//           sunLight.intensity = 0;
-//           moonLight.intensity = 1;
-//           ambientLight.intensity = 0.25;
-//       }
-  
-//       renderer.render(scene, camera);
-  
-//       time_prev = time;
-//       requestAnimationFrame(animate);
-//   }
-//   requestAnimationFrame(animate);
-  
-//   window.addEventListener('resize', () => {
-//       camera.aspect = window.innerWidth / window.innerHeight;
-//       camera.updateProjectionMatrix();
-//       renderer.setSize(window.innerWidth, window.innerHeight);
-//   });
-// }
+    
 
-// console.log("Initial setup complete");
-// console.log("Renderer: ", renderer);
-// console.log("Scene: ", scene);
-// console.log("Camera: ", camera);
-// console.log("Sun: ", sun);
-// console.log("Moon: ", moon);
-// console.log("SunLight: ", sunLight);
-// console.log("MoonLight: ", moonLight);
-// console.log("AmbientLight: ", ambientLight);
-// console.log("Skybox: ", skybox);
 
-// }
