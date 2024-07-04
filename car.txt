@@ -1,9 +1,5 @@
 let fenceObjects = [];
 
-
-
-
-//Kendaraan
 {
   //diam
   {
