@@ -1,0 +1,123 @@
+ new MTLLoader()
+    .setPath('resources/ModelGrafkom/kendaraan/')
+    .load('car1.mtl', function (materials) {
+
+      materials.preload();
+
+      new OBJLoader()
+        .setMaterials(materials)
+        .setPath('resources/ModelGrafkom/kendaraan/')
+        .load('car1.obj', function (object) {
+
+          //atur disini
+          object.position.x = -8;
+          object.position.y = 5;
+          object.position.z = -70;
+          object.scale.setScalar(5);
+
+          object.traverse(function (child) {
+            if (child.isMesh) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+            }
+          });
+
+          car1 = object;
+
+          scene.add(object);
+
+        }, onProgress);
+
+    });
+
+  // WASD Controls
+  let moveForward = false;
+  let moveBackward = false;
+  let turnLeft = false;
+  let turnRight = false;
+
+  function onKeyDown(event) {
+    if (event.key === 'w' || event.key === 'W') {
+      moveForward = true;
+    } else if (event.key === 's' || event.key === 'S') {
+      moveBackward = true;
+    } else if (event.key === 'a' || event.key === 'A') {
+      turnLeft = true;
+    } else if (event.key === 'd' || event.key === 'D') {
+      turnRight = true;
+    } else if (event.key === '5') {
+      toggleCamera();
+    }
+  }
+
+  function onKeyUp(event) {
+    if (event.key === 'w' || event.key === 'W') {
+      moveForward = false;
+    } else if (event.key === 's' || event.key === 'S') {
+      moveBackward = false;
+    } else if (event.key === 'a' || event.key === 'A') {
+      turnLeft = false;
+    } else if (event.key === 'd' || event.key === 'D') {
+      turnRight = false;
+    }
+  }
+
+  document.addEventListener('keydown', onKeyDown, false);
+  document.addEventListener('keyup', onKeyUp, false);
+
+  // First Person Camera
+  const cameraFirstPerson = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+  scene.add(cameraFirstPerson);
+
+  let useFirstPersonCamera = false;
+
+  function toggleCamera() {
+    useFirstPersonCamera = !useFirstPersonCamera;
+  }
+
+  let time_prev = 0;
+  function animate(time) {
+    const dt = (time - time_prev) * 0.1;
+
+    if (car1) {
+      if (moveForward) car1.translateZ(-0.5 * dt);
+      if (moveBackward) car1.translateZ(0.5 * dt);
+      if (turnLeft) car1.rotation.y += 0.02 * dt;
+      if (turnRight) car1.rotation.y -= 0.02 * dt;
+
+      let collided = false;
+      for (let fence of fenceObjects) {
+        if (checkCollision(car1, fence)) {
+          collided = true;
+          break;
+        }
+      }
+      if (collided) {
+        if (moveForward) car1.translateZ(0.5 * dt);
+        if (moveBackward) car1.translateZ(-0.5 * dt);
+        if (turnLeft) car1.rotation.y -= 0.02 * dt;
+        if (turnRight) car1.rotation.y += 0.02 * dt;
+      }
+
+      // Update first person camera position and rotation
+      cameraFirstPerson.position.copy(car1.position);
+      cameraFirstPerson.position.y += 10; // Adjust height above the car
+
+      // Ensure camera looks in the same direction as the car
+      const relativeOffset = new THREE.Vector3(0, 10, -15); // Adjust height and distance behind the car
+      const cameraOffset = relativeOffset.applyMatrix4(car1.matrixWorld);
+
+      cameraFirstPerson.position.copy(cameraOffset);
+      cameraFirstPerson.lookAt(car1.position);
+    }
+
+    if (useFirstPersonCamera) {
+      renderer.render(scene, cameraFirstPerson);
+    } else {
+      renderer.render(scene, camera);
+    }
+
+    time_prev = time;
+    requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
